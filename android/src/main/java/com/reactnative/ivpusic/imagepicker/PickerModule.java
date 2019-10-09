@@ -346,6 +346,8 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                 galleryIntent.setType("image/*");
             } else if (mediaType.equals("video")) {
                 galleryIntent.setType("video/*");
+            } else if (mediaType.equals("pdf")) {
+                galleryIntent.setType("application/pdf");
             } else {
                 galleryIntent.setType("*/*");
                 String[] mimetypes = {"image/*", "video/*"};
@@ -455,6 +457,10 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             return null;
         }
 
+        if (mime != null && mime.startsWith("application/pdf")) {
+            return getPdf(activity, path);
+        }
+
         return getImage(activity, path);
     }
 
@@ -469,6 +475,11 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         if (mime != null && mime.startsWith("video/")) {
             getVideo(activity, path, mime);
             return;
+        }
+
+        if (mime != null && mime.startsWith("application/pdf")) {
+            resultCollector.notifySuccess(getPdf(activity, path));
+            return ;
         }
 
         resultCollector.notifySuccess(getImage(activity, path));
@@ -594,6 +605,24 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         }
 
         return image;
+    }
+
+    private WritableMap getPdf(final Activity activity, String path) throws Exception {
+        WritableMap pdf = new WritableNativeMap();
+
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            throw new Exception("Cannot select remote files");
+        }
+
+        // if compression options are provided image will be compressed. If none options is provided,
+        // then original image will be returned
+        long modificationDate = new File(path).lastModified();
+
+        pdf.putString("path", "file://" + path);
+        pdf.putInt("size", (int) new File(path).length());
+        pdf.putString("modificationDate", String.valueOf(modificationDate));
+        image.putString("mime", "application/pdf");
+        return pdf;
     }
 
     private void configureCropperColors(UCrop.Options options) {
