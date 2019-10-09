@@ -1,4 +1,4 @@
-This fork adds PDF selection to react-native-image-crop-picker for a specfic use case I need.
+This fork adds PDF selection to react-native-image-crop-picker for a specfic use case I need. For now ther addition only works on Android, iOS coming soon with the iOS fix of the Flouci app
 
 # react-native-image-crop-picker
 
