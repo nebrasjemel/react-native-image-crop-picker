@@ -1,3 +1,5 @@
+This fork adds PDF selection to react-native-image-crop-picker for a specfic use case I need.
+
 # react-native-image-crop-picker
 
 [![Backers on Open Collective](https://opencollective.com/react-native-image-crop-picker/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/react-native-image-crop-picker/sponsors/badge.svg)](#sponsors)
