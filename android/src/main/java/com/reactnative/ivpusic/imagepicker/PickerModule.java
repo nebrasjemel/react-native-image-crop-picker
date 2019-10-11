@@ -625,7 +625,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         pdf.putString("path", "file://" + path);
         pdf.putInt("size", (int) new File(path).length());
         pdf.putString("modificationDate", String.valueOf(modificationDate));
-        image.putString("mime", "application/pdf");
+        pdf.putString("mime", "application/pdf");
         return pdf;
     }
 
